@@ -9,11 +9,16 @@
 
 ### Executar os testes
 
-**Executando arquivo específico com cli:** `docker-compose run --rm k6-cli run //performance//tests//api//swapi//swapi_suite.js`
+**Executando arquivo específico com cli:** `docker-compose run --rm k6-cli run //src//tests//api//sap//sponsors//sponsors_load.js`
 
-**Executando vários arquivos:** `docker-compose up swapi_immersion swapi_stress --abort-on-container-exit --exit-code-from swapi_immersion swapi_stress`
+**Executando vários arquivos:** `docker-compose up  sponsors_smoke sponsors_load sponsors_stress`
 
 
+#### Ordem de execução
+
+docker-compose up -d influxdb grafana
+
+docker-compose up  sponsors_smoke sponsors_load sponsors_stress 
 
 ## Estrutura de pastas do framework de performance
 

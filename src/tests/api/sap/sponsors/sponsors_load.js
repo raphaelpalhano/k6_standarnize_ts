@@ -1,6 +1,6 @@
 import { group } from 'k6';
 
-import { getPeople, getAllPeople, getSpecies, getPlanets } from '../../../../src/scripts/people.service';
+import { getPeople, getAllPeople, getSpecies, getPlanets } from '../../../../scripts/people.service.js';
 
 export const options = {
   thresholds: {
