@@ -45,12 +45,5 @@ Estrutura as pastas de serviços, endpoint que serão testadas.
 
 [api](`somente testes que fazem request direto no microsserviço`) -->  [sap](`nome do microsserviço`) --> [sponsors](`nome do endpoint`) --> [group](`dentro de cada arquivo de teste será separado por grupo de métodos HTTP POST/sponsors, GET/sponsors`)
 
-## Dash board
 
-**URL**: `https://app.currents.dev/projects/T4Uq0n/runs`
 
-## Entendendo como funciona o sorry-cypress
-
-**URL**: `https://docs.sorry-cypress.dev/guide/get-started`
-
-**Tutorial**: `https://www.youtube.com/watch?v=xyFe3QAK9IY&t=205s`
