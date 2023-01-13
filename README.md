@@ -40,12 +40,21 @@ Estrutura as pastas de serviços, endpoint que serão testadas.
 
 [api](`somente testes que fazem request direto no microsserviço`) -->  [sap](`nome do microsserviço`) --> [sponsors](`nome do endpoint`) --> [group](`dentro de cada arquivo de teste será separado por grupo de métodos HTTP POST/sponsors, GET/sponsors`)
 
-## Dash board
+## Install K6 in pipeline
 
-**URL**: `https://app.currents.dev/projects/T4Uq0n/runs`
+~~~sh
 
-## Entendendo como funciona o sorry-cypress
+apt-get update &&  apt-get install ca-certificates gnupg2 -y
+apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C5AD17C747E3415A3642D57D77C6C491D6AC1D69
+echo "deb https://dl.k6.io/deb stable main" | tee /etc/apt/sources.list.d/k6.list
+apt-get update
+apt-get install k6
 
-**URL**: `https://docs.sorry-cypress.dev/guide/get-started`
+~~~
 
-**Tutorial**: `https://www.youtube.com/watch?v=xyFe3QAK9IY&t=205s`
+### Executando comando
+
+~~~sh
+k6 run dist/sponsors/load.test.js
+
+~~~

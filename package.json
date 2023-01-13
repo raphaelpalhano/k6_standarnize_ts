@@ -8,8 +8,7 @@
   },
   "scripts": {
     "test": "k6 run dist/sponsors/load.test.js",
-    "bundle": "webpack"
-  
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
@@ -24,13 +23,16 @@
   "author": "Raphael",
   "license": "ISC",
   "devDependencies": {
+    "webpack-cli": "^5.0.1"
+  },
+  "dependencies": {
     "@babel/core": "^7.20.12",
     "@babel/preset-env": "^7.20.2",
+    "@faker-js/faker": "^7.6.0",
     "babel-loader": "^9.1.2",
     "core-js": "^3.27.1",
     "k6": "^0.0.0",
     "path": "^0.12.7",
-    "webpack": "^5.75.0",
-    "webpack-cli": "^5.0.1"
+    "webpack": "^5.75.0"
   }
 }
