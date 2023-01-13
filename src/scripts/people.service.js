@@ -1,4 +1,6 @@
 import http from 'k6/http';
+import { Faker } from "k6/x/faker"
+
 import { check, sleep } from 'k6';
 
 export function getPeople() {
