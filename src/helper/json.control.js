@@ -4,7 +4,7 @@ import {getRandomArbitrary, getRandomInt} from './random.control.js';
 
 
 export function createInvoices(numberInvoices){
-    const dateIncremented = dataIncrement(5);
+    const dateIncremented = dataIncrement(10);
     const dateDecresed = dataDecrease(10)
     const items = {items: []};
     
@@ -28,13 +28,13 @@ export function createInvoices(numberInvoices){
         items.items.push(object);
         
     }
-    console.log(items)
+
+    // console.log(items)
 
     return JSON.stringify(items)
         
 }
 
-console.log(createInvoices(10));
 
 // const data = new SharedArray('some data name', function (filePath) {
 //   return JSON.parse(open(filePath));

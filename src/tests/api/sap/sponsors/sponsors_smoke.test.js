@@ -1,11 +1,10 @@
-import { getPeople } from '../../../../scripts/people.service.js';
+import { uploadInvoices } from "../../../../services/sap.service";
+import { group } from 'k6';
 
-export const options = {
-
-  duration: '1s',
-  vus: 1,
-};
 
 export default function () {
-  getPeople();
+  group('METHOD=POST,API=sap,ENDPOINT=sponsors', function () {
+    uploadInvoices(5)
+  });
+
 }

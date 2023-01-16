@@ -1,0 +1,28 @@
+image: 253882794486.dkr.ecr.us-east-1.amazonaws.com/build-tools:864d3610-node-18
+
+#include:
+#  - project: 'fca/architecture/IaC/cloud-digital/common-ci'
+#    file: 'job-commons.yml'
+
+stages:
+  - test
+
+
+before_script:
+    - apt-get update &&  apt-get install ca-certificates gnupg2 -y
+    - apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C5AD17C747E3415A3642D57D77C6C491D6AC1D69
+    - echo "deb https://dl.k6.io/deb stable main" | tee /etc/apt/sources.list.d/k6.list
+    - apt-get update
+    - apt-get install k6
+    - npm ci
+    - npm run build
+
+
+load-test:
+  stage: test
+  only:
+    - develop
+    - master
+    - refactor/node-k6
+  script:  
+    - npm run load

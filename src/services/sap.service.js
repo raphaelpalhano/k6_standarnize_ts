@@ -1,5 +1,5 @@
 import http from 'k6/http';
-import { check } from 'k6';
+import { check, sleep } from 'k6';
 import { USERNAME_GESTOR, USERNAME_INVESTOR, USERNAME_SUPPLIER, PASSWORD_ENTITY } from '../constants/users.js';
 import { createInvoices } from '../helper/json.control.js';
 import { SAP_URL } from '../constants/urls.js';
@@ -42,9 +42,10 @@ export function authSap(entityType) {
   const payload = `username=${typeUser.username}&password=${typeUser.password}&client_id=${typeUser.client_id}&client_secret=${typeUser.client_secret}`
   const response = http.post(`${SAP_URL}auth/token`, payload, params)
 
-  // check(response, { 'status is 200': (r) => r.status === 200 });
+  check(response, { 'status is 200': (r) => r.status === 200 });
 
-  // sleep(0.3);
+  sleep(0.1);
+
 
   return response.json().AccessToken
 }
@@ -62,8 +63,7 @@ export function uploadInvoices(numberInvoices){
   };
 
   const response = http.post(`${SAP_URL}sponsors/1/payables`, payload, params)
-
-  console.log(response);
+  console.log(response.status)
   check(response, { 'status is 202': (r) => r.status === 202 });
 
   sleep(0.3);

@@ -7,7 +7,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "k6 run dist/sponsors/load.test.js",
+    "load": "k6 run dist/sponsors/load.test.js",
     "build": "webpack"
   },
   "repository": {
