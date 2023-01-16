@@ -1,6 +1,6 @@
 import { group } from 'k6';
 
-import { getPeople, getAllPeople, getSpecies, getPlanets } from '../../../../src/scripts/people.service';
+import {uploadInvoices } from '../../../../services/sap.service.js';
 
 export const options = {
   thresholds: {
@@ -21,15 +21,7 @@ export const options = {
 
 export default function () {
   group('sponsors', function () {
-    getPeople();
-    getAllPeople();
+    uploadInvoices(5)
   });
 
-  group('summary', function () {
-    getSpecies();
-  });
-
-  group('signatures', function () {
-    getPlanets();
-  });
 }

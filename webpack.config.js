@@ -3,12 +3,15 @@ const path = require('path');
 module.exports = {
   mode: 'production',
   entry: {
-    'sponsors/load.test': './src/tests/api/sap/sponsors/sponsors_load.js',
+    'sponsors/load.test': './src/tests/api/sap/sponsors/sponsors_load.test.js',
+    
   },
+  devtool: false,
   output: {
     path: path.resolve(__dirname, 'dist'),
     libraryTarget: 'commonjs',
     filename: '[name].js',
+    clean: true,
   },
   module: {
     rules: [{ test: /\.js$/, use: 'babel-loader' }],
@@ -16,6 +19,11 @@ module.exports = {
   stats: {
     colors: true
   },
+  performance: {
+    hints: false,
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000
+ },
   target: 'web',
   externals: /k6(\/.*)?/,
 };
