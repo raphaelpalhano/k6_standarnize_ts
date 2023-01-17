@@ -44,7 +44,7 @@ services:
       - K6_OUT=influxdb=http://influxdb:8086/k6
     volumes:
        - ./src/:/src
-    command: run //src//tests//api//sap//sponsors//sponsors_smoke.js
+    command: run //src//tests//api//sap//sponsors//sponsors_smoke.test.js
     ports:
        - "6565:6565"
 
@@ -57,7 +57,7 @@ services:
       - K6_OUT=influxdb=http://influxdb:8086/k6
     volumes:
        - ./src/:/src
-    command: run //src//tests//api//sap//sponsors//sponsors_load.js
+    command: run //src//tests//api//sap//sponsors//sponsors_load.test.js
     ports:
        - "6566:6566"
 
@@ -70,7 +70,7 @@ services:
       - K6_OUT=influxdb=http://influxdb:8086/k6
     volumes:
        - ./src/:/src
-    command: run //src//tests//api//sap//sponsors//sponsors_stress.js
+    command: run //src//tests//api//sap//sponsors//sponsors_stress.test.js
     ports:
        - "6567:6567"
 

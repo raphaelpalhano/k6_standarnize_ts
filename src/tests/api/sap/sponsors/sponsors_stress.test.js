@@ -1,6 +1,5 @@
+import { uploadInvoices } from "../../../../services/sap.service";
 import { group } from 'k6';
-import { getPeople, getAllPeople, getSpecies, getPlanets } from '../../../../scripts/people.service.js';
-
 export const options = {
   stages: [
     { duration: '2s', target: 2 }, // below normal load
@@ -16,16 +15,7 @@ export const options = {
 };
 
 export default function () {
-  group('orders', function () {
-    getPeople();
-    getAllPeople();
-  });
-
-  group('summary', function () {
-    getSpecies();
-  });
-
-  group('signatures', function () {
-    getPlanets();
+  group('METHOD=POST,API=sap,ENDPOINT=sponsors', function () {
+    uploadInvoices(5)
   });
 }
