@@ -9,7 +9,7 @@
 
 ### Executar os testes
 
-**Executando arquivo específico com cli:** `docker-compose run --rm k6-cli run //src//tests//api//sap//sponsors//sponsors_load.js`
+**Executando arquivo específico com cli:** `docker-compose run --rm k6-cli run //src//tests//api//sap//sponsors//sponsors_load.test.js`
 
 **Executando vários arquivos:** `docker-compose up  sponsors_smoke sponsors_load sponsors_stress`
 
@@ -44,6 +44,3 @@ Arquivos com funções auxiliares, como: `conectar ao banco para executar querys
 Estrutura as pastas de serviços, endpoint que serão testadas.
 
 [api](`somente testes que fazem request direto no microsserviço`) -->  [sap](`nome do microsserviço`) --> [sponsors](`nome do endpoint`) --> [group](`dentro de cada arquivo de teste será separado por grupo de métodos HTTP POST/sponsors, GET/sponsors`)
-
-
-
