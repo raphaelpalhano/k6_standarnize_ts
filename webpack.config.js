@@ -4,6 +4,8 @@ module.exports = {
   mode: 'production',
   entry: {
     'sponsors/load.test': './src/tests/api/sap/sponsors/sponsors_load.test.js',
+    'sponsors/stress.test': './src/tests/api/sap/sponsors/sponsors_stress.test.js',
+
     
   },
   devtool: false,
