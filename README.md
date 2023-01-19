@@ -15,7 +15,7 @@ docker build -t k6-tests:latest -f docker/dockerfile .
 
 **Executando arquivo específico com cli:** `docker-compose run --rm k6-cli run //performance//tests//api//swapi//swapi_suite.js`
 
-**Executando vários arquivos:** `docker-compose up swapi_immersion swapi_stress`
+**Executando vários arquivos:** `docker-compose up sponsors_smoke sponsors_load sponsors_stress`
 
 
 
@@ -44,19 +44,8 @@ Estrutura as pastas de serviços, endpoint que serão testadas.
 
 [api](`somente testes que fazem request direto no microsserviço`) -->  [sap](`nome do microsserviço`) --> [sponsors](`nome do endpoint`) --> [group](`dentro de cada arquivo de teste será separado por grupo de métodos HTTP POST/sponsors, GET/sponsors`)
 
-## Install K6 in pipeline
 
-~~~sh
-
-apt-get update &&  apt-get install ca-certificates gnupg2 -y
-apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C5AD17C747E3415A3642D57D77C6C491D6AC1D69
-echo "deb https://dl.k6.io/deb stable main" | tee /etc/apt/sources.list.d/k6.list
-apt-get update
-apt-get install k6
-
-~~~
-
-### Executando comando
+## Executando testes via cli Local
 
 ~~~sh
 k6 run dist/sponsors/load.test.js
