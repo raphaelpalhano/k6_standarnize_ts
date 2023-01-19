@@ -5,6 +5,7 @@ module.exports = {
   entry: {
     'sponsors/load.test': './src/tests/api/sap/sponsors/sponsors_load.test.js',
     'sponsors/stress.test': './src/tests/api/sap/sponsors/sponsors_stress.test.js',
+    'sponsors/smoke.test': './src/tests/api/sap/sponsors/sponsors_smoke.test.js'
 
     
   },

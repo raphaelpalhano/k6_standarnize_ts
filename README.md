@@ -7,11 +7,15 @@
 
 **Subir o grafana e influxdb:** `docker-compose up -d influxdb grafana`
 
+## Build
+
+docker build -t k6-tests:latest -f docker/dockerfile .
+
 ### Executar os testes
 
 **Executando arquivo específico com cli:** `docker-compose run --rm k6-cli run //performance//tests//api//swapi//swapi_suite.js`
 
-**Executando vários arquivos:** `docker-compose up swapi_immersion swapi_stress --abort-on-container-exit --exit-code-from swapi_immersion swapi_stress`
+**Executando vários arquivos:** `docker-compose up swapi_immersion swapi_stress`
 
 
 
