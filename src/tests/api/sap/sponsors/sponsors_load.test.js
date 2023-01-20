@@ -1,6 +1,7 @@
+import { uploadInvoices } from "../../../../services/sap.service";
+import { group } from 'k6';
 
 
-import {uploadInvoices } from '../../../../services/sap.service.js';
 
 export const options = {
   thresholds: {

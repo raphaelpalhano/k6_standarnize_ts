@@ -9,16 +9,22 @@
 
 ## Build
 
-docker build -t k6-tests:latest -f docker/dockerfile .
+docker build -t k6-tests:latest -f docker/dockerfile.nonprod .
 
-### Executar os testes
+### Executar os testes local via docker
 
 **Executando arquivo específico com cli:** `docker-compose run --rm k6-cli run //src//tests//api//sap//sponsors//sponsors_load.js`
 
 **Executando vários arquivos:** `docker-compose up sponsors_smoke sponsors_load sponsors_stress`
 
+### Executando testes via cli Local
 
-#### Ordem de execução
+~~~sh
+k6 run dist/sponsors/load.test.js
+
+~~~
+
+#### Ordem de execução local
 
 docker-compose up -d influxdb grafana
 
@@ -50,9 +56,15 @@ Estrutura as pastas de serviços, endpoint que serão testadas.
 [api](`somente testes que fazem request direto no microsserviço`) -->  [sap](`nome do microsserviço`) --> [sponsors](`nome do endpoint`) --> [group](`dentro de cada arquivo de teste será separado por grupo de métodos HTTP POST/sponsors, GET/sponsors`)
 
 
-## Executando testes via cli Local
 
-~~~sh
-k6 run dist/sponsors/load.test.js
+## Executando na cloud
 
-~~~
+### Build
+
+docker build -t k6-tests:latest -f docker/dockerfile.nonprod .
+
+
+
+### test
+
+docker run -t k6-tests:latest run --env VARIABLES_ENV=NONPROD dist/sponsors/load.test.js

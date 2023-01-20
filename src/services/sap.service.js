@@ -4,10 +4,9 @@ import { createInvoices } from '../helper/json.control.js';
 import { setupEnv } from '../helper/env.control.js';
 
 const ENV = setupEnv(__ENV.VARIABLES_ENV); 
-let TOKEN = ''
+// let TOKEN = ''
 
 export function authSap(entityType) {
-  
   let typeUser;
   const typesUsers = {
     supplier: {
@@ -42,8 +41,9 @@ export function authSap(entityType) {
 
   const payload = `username=${typeUser.username}&password=${typeUser.password}&client_id=${typeUser.client_id}&client_secret=${typeUser.client_secret}`
   const response = http.post(`${ENV.SAP_URL}auth/token`, payload, params) 
+
   if(response.status !== 200){
-    console.log(response.body());
+    console.log(response)
     console.log(response.status);
   }
 
@@ -56,9 +56,11 @@ export function authSap(entityType) {
 }
 
 export function uploadInvoices(numberInvoices){
-  if(TOKEN.length < 1){
-    TOKEN = authSap('manager');
-  }
+  // if(TOKEN.length < 1){
+    
+  // }
+
+  const TOKEN = authSap('manager');
  
   const payload = createInvoices(numberInvoices);
   const params = {
@@ -72,7 +74,7 @@ export function uploadInvoices(numberInvoices){
 
   const response = http.post(`${ENV.SAP_URL}sponsors/1/payables`, payload, params)
   if(response.status !== 202){
-    console.log(response.body());
+    console.log(response)
     console.log(response.status);
   }
 
