@@ -55,7 +55,6 @@ export function authSap(entityType) {
 export function uploadInvoices(numberInvoices){
   if(TOKEN.length < 1){
     TOKEN = authSap('manager');
-    console.log(TOKEN)
   }
  
   // console.log(TOKEN)
@@ -72,8 +71,10 @@ export function uploadInvoices(numberInvoices){
   const response = http.post(`${ENV.SAP_URL}sponsors/1/payables`, payload, params)
   if(response.status !== 202){
     console.log(response.body())
+    console.log(response.status)
+
+
   }
-  console.log(response.status)
 
   check(response, { 'status is 202': (r) => r.status === 202 });
 
