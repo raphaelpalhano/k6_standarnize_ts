@@ -55,6 +55,10 @@ export function authCognito(entityType){
     const response = http.post(`${ENV.COGNITO_URL}`, body, params)
     TOKEN = response.json().AccessToken
 
+    if(response.status !== 200){
+        console.log(response.body());
+        console.log(response.status);
+    }
 
     check(response, { 'status is 200': (r) => r.status === 200 });
 

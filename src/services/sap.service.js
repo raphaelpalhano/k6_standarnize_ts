@@ -31,7 +31,7 @@ export function authSap(entityType) {
     },
   };  
   
-  typeUser = typesUsers[entityType]
+  typeUser = typesUsers[entityType];
   const params = {
     headers: 
     { 
@@ -42,8 +42,11 @@ export function authSap(entityType) {
 
   const payload = `username=${typeUser.username}&password=${typeUser.password}&client_id=${typeUser.client_id}&client_secret=${typeUser.client_secret}`
   const response = http.post(`${ENV.SAP_URL}auth/token`, payload, params) 
+  if(response.status !== 200){
+    console.log(response.body());
+    console.log(response.status);
+  }
 
-  console.log(response.status)
   check(response, { 'status is 200': (r) => r.status === 200 });
 
   sleep(0.1);
@@ -57,7 +60,6 @@ export function uploadInvoices(numberInvoices){
     TOKEN = authSap('manager');
   }
  
-  // console.log(TOKEN)
   const payload = createInvoices(numberInvoices);
   const params = {
     headers: 
@@ -70,10 +72,8 @@ export function uploadInvoices(numberInvoices){
 
   const response = http.post(`${ENV.SAP_URL}sponsors/1/payables`, payload, params)
   if(response.status !== 202){
-    console.log(response.body())
-    console.log(response.status)
-
-
+    console.log(response.body());
+    console.log(response.status);
   }
 
   check(response, { 'status is 202': (r) => r.status === 202 });
