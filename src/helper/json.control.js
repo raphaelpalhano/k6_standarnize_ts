@@ -20,7 +20,7 @@ export function createInvoices(numberInvoices){
             invoiceNumber: getRandomArbitrary(1, 20000),
             paymentDate: `${dateIncremented}`,
             realPaymentDate: `${dateIncremented}`,
-            paymentValue: getRandomArbitrary(1, 20000),
+            paymentValue: getRandomArbitrary(100, 30000),
             supplierGovernmentId: '79922720000164',
             supplierName: 'PERFORMANCE TEST',
             totalInstallment: installmentValue,

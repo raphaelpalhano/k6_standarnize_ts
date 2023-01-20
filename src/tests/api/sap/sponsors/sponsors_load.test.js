@@ -1,6 +1,6 @@
 import { group } from 'k6';
 
-import {uploadInvoices } from '../../../../services/sap.service.js';
+import {authSap, uploadInvoices } from '../../../../services/sap.service.js';
 
 export const options = {
   thresholds: {
@@ -22,6 +22,7 @@ export const options = {
 export default function () {
   group('METHOD=POST,API=sap,ENDPOINT=sponsors', function () {
     uploadInvoices(5)
+    //authSap('manager');
   });
 
 }
