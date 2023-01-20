@@ -1,6 +1,5 @@
 import { uploadInvoices } from "../../../../services/sap.service";
 import { group } from 'k6';
-
 export const options = {
   stages: [
     { duration: '2s', target: 2 }, // below normal load

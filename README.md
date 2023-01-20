@@ -13,7 +13,7 @@ docker build -t k6-tests:latest -f docker/dockerfile.nonprod .
 
 ### Executar os testes local via docker
 
-**Executando arquivo específico com cli:** `docker-compose run --rm k6-cli run //src//tests//api//sap//sponsors//sponsors_load.js`
+**Executando arquivo específico com cli:** `docker-compose run --rm k6-cli run //src//tests//api//sap//sponsors//sponsors_load.test.js`
 
 **Executando vários arquivos:** `docker-compose up sponsors_smoke sponsors_load sponsors_stress`
 
@@ -55,16 +55,12 @@ Estrutura as pastas de serviços, endpoint que serão testadas.
 
 [api](`somente testes que fazem request direto no microsserviço`) -->  [sap](`nome do microsserviço`) --> [sponsors](`nome do endpoint`) --> [group](`dentro de cada arquivo de teste será separado por grupo de métodos HTTP POST/sponsors, GET/sponsors`)
 
+## Dash board
 
+**URL**: `https://app.currents.dev/projects/T4Uq0n/runs`
 
-## Executando na cloud
+## Entendendo como funciona o sorry-cypress
 
-### Build
+**URL**: `https://docs.sorry-cypress.dev/guide/get-started`
 
-docker build -t k6-tests:latest -f docker/dockerfile.nonprod .
-
-
-
-### test
-
-docker run -t k6-tests:latest run --env VARIABLES_ENV=NONPROD dist/sponsors/load.test.js
+**Tutorial**: `https://www.youtube.com/watch?v=xyFe3QAK9IY&t=205s`

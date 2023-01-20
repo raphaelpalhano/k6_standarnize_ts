@@ -2,7 +2,6 @@ import { uploadInvoices } from "../../../../services/sap.service";
 import { group } from 'k6';
 
 
-
 export const options = {
   thresholds: {
     http_req_failed: ['rate<0.02'], // http errors should be less than 5%
