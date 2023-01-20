@@ -55,12 +55,16 @@ Estrutura as pastas de serviços, endpoint que serão testadas.
 
 [api](`somente testes que fazem request direto no microsserviço`) -->  [sap](`nome do microsserviço`) --> [sponsors](`nome do endpoint`) --> [group](`dentro de cada arquivo de teste será separado por grupo de métodos HTTP POST/sponsors, GET/sponsors`)
 
-## Dash board
 
-**URL**: `https://app.currents.dev/projects/T4Uq0n/runs`
 
-## Entendendo como funciona o sorry-cypress
+## Executando na cloud
 
-**URL**: `https://docs.sorry-cypress.dev/guide/get-started`
+### Build
 
-**Tutorial**: `https://www.youtube.com/watch?v=xyFe3QAK9IY&t=205s`
+docker build -t k6-tests:latest -f docker/dockerfile.nonprod .
+
+
+
+### test
+
+docker run -t k6-tests:latest run --env VARIABLES_ENV=NONPROD dist/sponsors/load.test.js
