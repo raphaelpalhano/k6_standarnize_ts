@@ -7,11 +7,15 @@
 
 **Subir o grafana e influxdb:** `docker-compose up -d influxdb grafana`
 
+## Build
+
+docker build -t k6-tests:latest -f docker/dockerfile .
+
 ### Executar os testes
 
 **Executando arquivo específico com cli:** `docker-compose run --rm k6-cli run //src//tests//api//sap//sponsors//sponsors_load.js`
 
-**Executando vários arquivos:** `docker-compose up  sponsors_smoke sponsors_load sponsors_stress`
+**Executando vários arquivos:** `docker-compose up sponsors_smoke sponsors_load sponsors_stress`
 
 
 #### Ordem de execução
@@ -45,12 +49,10 @@ Estrutura as pastas de serviços, endpoint que serão testadas.
 
 [api](`somente testes que fazem request direto no microsserviço`) -->  [sap](`nome do microsserviço`) --> [sponsors](`nome do endpoint`) --> [group](`dentro de cada arquivo de teste será separado por grupo de métodos HTTP POST/sponsors, GET/sponsors`)
 
-## Dash board
 
-**URL**: `https://app.currents.dev/projects/T4Uq0n/runs`
+## Executando testes via cli Local
 
-## Entendendo como funciona o sorry-cypress
+~~~sh
+k6 run dist/sponsors/load.test.js
 
-**URL**: `https://docs.sorry-cypress.dev/guide/get-started`
-
-**Tutorial**: `https://www.youtube.com/watch?v=xyFe3QAK9IY&t=205s`
+~~~

@@ -1,6 +1,6 @@
-import { group } from 'k6';
 
-import { getPeople, getAllPeople, getSpecies, getPlanets } from '../../../../scripts/people.service.js';
+
+import {uploadInvoices } from '../../../../services/sap.service.js';
 
 export const options = {
   thresholds: {
@@ -9,10 +9,10 @@ export const options = {
   },
   stages: [
     // Ramp-up from 1 to 5 virtual users (VUs) in 5s
-    { duration: '5s', target: 5 },
+    { duration: '5s', target: 15 },
 
     // Stay at rest on 5 VUs for 10s
-    { duration: '10s', target: 5 },
+    { duration: '20s', target: 15 },
 
     // Ramp-down from 5 to 0 VUs for 5s
     { duration: '5s', target: 0 },
@@ -20,16 +20,9 @@ export const options = {
 };
 
 export default function () {
-  group('sponsors', function () {
-    getPeople();
-    getAllPeople();
+  group('METHOD=POST,API=sap,ENDPOINT=sponsors', function () {
+    uploadInvoices(5)
+    //authSap('manager');
   });
 
-  group('summary', function () {
-    getSpecies();
-  });
-
-  group('signatures', function () {
-    getPlanets();
-  });
 }
