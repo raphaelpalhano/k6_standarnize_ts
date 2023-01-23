@@ -9,7 +9,7 @@
 
 ## Build
 
-docker build -t k6-tests:latest -f docker/dockerfile.nonprod .
+docker build -t k6-tests:latest -f docker/dockerfile .
 
 ### Executar os testes local via docker
 
