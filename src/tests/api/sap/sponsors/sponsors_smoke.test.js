@@ -1,10 +1,23 @@
-import { uploadInvoices } from "../../../../services/sap.service";
+import { authSap, uploadInvoices } from "../../../../services/sap.service";
 import { group } from 'k6';
 
 
-export default function () {
-  group('METHOD=POST,API=sap,ENDPOINT=sponsors', function () {
-    uploadInvoices(5)
+
+export function setup() {
+  return {data:  authSap('manager')};
+}
+
+
+export default function (data) {
+
+  group('[Sponsors] upload 100 notas', function () {
+    uploadInvoices(1, data)
   });
 
+}
+
+export function teardown(data){
+  if(!data){
+    throw new Error(`token not generate ${JSON.stringify(data)}`);
+  } 
 }

@@ -1,21 +1,36 @@
-import { uploadInvoices } from "../../../../services/sap.service";
+import { authSap, uploadInvoices } from "../../../../services/sap.service";
 import { group } from 'k6';
+
+
 export const options = {
   stages: [
-    { duration: '2s', target: 2 }, // below normal load
-    { duration: '5s', target: 2 },
-    { duration: '2s', target: 4 }, // normal load
-    { duration: '5s', target: 4 },
-    { duration: '2s', target: 6 }, // around the breaking point
-    { duration: '5s', target: 6 },
-    { duration: '2s', target: 8 }, // beyond the breaking point
-    { duration: '5s', target: 8 },
+    { duration: '4s', target: 2 }, // below normal load
+    { duration: '10s', target: 4 },
+    { duration: '4s', target: 8 }, // normal load
+    { duration: '10s', target: 16 },
+    { duration: '4s', target: 20 }, // around the breaking point
+    { duration: '10s', target: 20 },
+    { duration: '4s', target: 40 }, // beyond the breaking point
+    { duration: '10s', target: 40 },
     { duration: '10s', target: 0 }, // scale down. Recovery stage.
   ],
 };
 
-export default function () {
-  group('METHOD=POST,API=sap,ENDPOINT=sponsors', function () {
-    uploadInvoices(5)
+export function setup() {
+  return {data:  authSap('manager')};
+}
+
+
+export default function (data) {
+
+  group('[Sponsors] upload 100 notas', function () {
+    uploadInvoices(100, data)
   });
+
+}
+
+export function teardown(data){
+  if(!data){
+    throw new Error(`token not generate ${JSON.stringify(data)}`);
+  } 
 }
