@@ -28,7 +28,6 @@
   "dependencies": {
     "@babel/core": "^7.20.12",
     "@babel/preset-env": "^7.20.2",
-    "@faker-js/faker": "^7.6.0",
     "babel-loader": "^9.1.2",
     "core-js": "^3.27.1",
     "k6": "^0.0.0",
