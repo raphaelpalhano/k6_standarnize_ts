@@ -4,12 +4,9 @@ import { createInvoices } from '../helper/json.control.js';
 import { setupEnv } from '../helper/env.control.js';
 
 const ENV = setupEnv(__ENV.VARIABLES_ENV); 
-// let TOKEN;
 
 export function authSap(entityType) {
-  // if(TOKEN){
-  //   return TOKEN;
-  // }
+
   let typeUser;
   const typesUsers = {
     supplier: {
@@ -44,7 +41,6 @@ export function authSap(entityType) {
 
   const payload = `username=${typeUser.username}&password=${typeUser.password}&client_id=${typeUser.client_id}&client_secret=${typeUser.client_secret}`
   const response = http.post(`${ENV.SAP_URL}auth/token`, payload, params) 
-  // TOKEN = response.json().access_token;
 
   if(response.status !== 200){
     console.log(response)
@@ -61,10 +57,8 @@ export function authSap(entityType) {
   return response.json().access_token
 }
 
-export function uploadInvoices(numberInvoices){
+export function uploadInvoices(numberInvoices, TOKEN){
 
-  const TOKEN = authSap('manager');
- 
   const payload = createInvoices(numberInvoices);
   const params = {
     headers: 
@@ -77,8 +71,8 @@ export function uploadInvoices(numberInvoices){
 
   const response = http.post(`${ENV.SAP_URL}sponsors/1/payables`, payload, params)
   if(response.status !== 202){
-    console.log(response)
-    console.log(response.status);
+     console.log(JSON.stringify(response, null, "  "));
+      console.log(response.status);
   }
 
   check(response, { 'status is 202': (r) => r.status === 202 });
@@ -88,3 +82,26 @@ export function uploadInvoices(numberInvoices){
 
 }
 
+export function researchInvoices(filter, TOKEN){
+  const params = {
+    headers: 
+    { 
+      'Accept': '*/*',
+      'content-type': 'application/json',
+      'Authorization': `Bearer ${TOKEN}`
+    }, 
+  };
+  
+  const response = http.get(`${ENV.SAP_URL}sponsors/1/payables?search${filter.search}&size=${filter.size}&sort=${filter.sort}`, params);
+
+  if(response.status !== 200){
+    console.log(JSON.stringify(response, null, "  "));
+    console.log(response.status);
+  }
+
+  check(response, { 'status is 202': (r) => r.status === 202 });
+
+
+  sleep(0.2);
+
+}

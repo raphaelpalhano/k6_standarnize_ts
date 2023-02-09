@@ -3,9 +3,9 @@ const path = require('path');
 module.exports = {
   mode: 'production',
   entry: {
-    'sponsors/sponsor_load.test': './src/tests/api/sponsors/payables_load.test.js',
-    'sponsors/sponsor_stress.test': './src/tests/api/sponsors/payables_stress.test.js',
-    'sponsors/sponsor_smoke.test': './src/tests/api/sponsors/payables_smoke.test.js',
+    'sponsors/payables_load.test': './src/tests/api/sponsors/payables_load.test.js',
+    'sponsors/payables_stress.test': './src/tests/api/sponsors/payables_stress.test.js',
+    'sponsors/payables_smoke.test': './src/tests/api/sponsors/payables_smoke.test.js',
     'operations/orders_load.test': './src/tests/api/operations/orders_load.test.js',
     'operations/orders_stress.test': './src/tests/api/operations/orders_stress.test.js'
 

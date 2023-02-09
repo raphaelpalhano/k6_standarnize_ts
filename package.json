@@ -7,7 +7,7 @@
     "test": "tests"
   },
   "scripts": {
-    "load": "k6 run --env VARIABLES_ENV=NONPROD dist/sponsors/load.test.js",
+    "load": "k6 run --env VARIABLES_ENV=NONPROD dist/sponsors/payables_load.test.js",
     "build": "webpack"
   },
   "repository": {

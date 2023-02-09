@@ -1,18 +1,6 @@
-import { authSap, uploadInvoices } from "../../../services/sap.service";
+import { authSap, researchInvoices, uploadInvoices } from "../../../services/sap.service";
 import { group } from 'k6';
-
-/**
  
-1. Validar os valores do payload, chaves preenchidas, como os campos obrigatórios.
-2. Validação da nota (condições: valor inferior a 10, data de pagamento inferior a 5 dias, validar se não a nota duplicada, considera a chave composta )
-OBS: CHAVE COMPOSTA: invoiceNumber, paymentDate, SupplierGovernmentId, e caso os campos adicionais installment e external estiverem presentes vão entrar na chave composta.
-3. Inicializa o SQS e insere o Payload
-4. Recebe as notas do SQS
-5. É feito a verificação de duplicidade das notas, se as notas não estão no dynamoDb.
-6. As notas que estão vindo do SQS se estiverem no DynamoDb, é gerado um log 
-7. Iniciar outra fila payables_ready
-
- */ 
 
 export const options = {
   thresholds: {
@@ -40,6 +28,10 @@ export default function (data) {
 
   group('[Sponsors] upload 100 notas', function () {
     uploadInvoices(100, data.token)
+  });
+
+  group('[Sponsors] research for invoices', function () {
+    researchInvoices({search: '', size: '', sort: ''}, data.token)
   });
 
 }
