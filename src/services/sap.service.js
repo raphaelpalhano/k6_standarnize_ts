@@ -41,6 +41,7 @@ export function authSap(entityType) {
 
   const payload = `username=${typeUser.username}&password=${typeUser.password}&client_id=${typeUser.client_id}&client_secret=${typeUser.client_secret}`
   const response = http.post(`${ENV.SAP_URL}auth/token`, payload, params) 
+  // TOKEN = response.json().access_token;
 
   if(response.status !== 200){
     console.log(response)
@@ -71,8 +72,8 @@ export function uploadInvoices(numberInvoices, TOKEN){
 
   const response = http.post(`${ENV.SAP_URL}sponsors/1/payables`, payload, params)
   if(response.status !== 202){
-     console.log(JSON.stringify(response, null, "  "));
-      console.log(response.status);
+    console.log(JSON.stringify(response, null, "  "));
+    console.log(`fail: status ${response.status}`)
   }
 
   check(response, { 'status is 202': (r) => r.status === 202 });
@@ -96,10 +97,10 @@ export function researchInvoices(filter, TOKEN){
 
   if(response.status !== 200){
     console.log(JSON.stringify(response, null, "  "));
-    console.log(response.status);
+    console.log(`fail: stauts ${response.status}`)
   }
 
-  check(response, { 'status is 202': (r) => r.status === 202 });
+  check(response, { 'status is 200': (r) => r.status === 200 });
 
 
   sleep(0.2);

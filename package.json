@@ -4,6 +4,7 @@
   "description": "performance-test-ms8",
   "main": "test",
   "directories": {
+    "source": "src",
     "test": "tests"
   },
   "scripts": {
