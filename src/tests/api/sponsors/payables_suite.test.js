@@ -1,5 +1,6 @@
-import { uploadInvoices } from "../../../../services/sap.service";
+import {  uploadInvoices } from "../../../services/sap.service";
 import { group } from 'k6';
+
 
 export const options = {
   thresholds: {
@@ -44,8 +45,21 @@ export const options = {
   },
 };
 
-export default function () {
-  group('METHOD=POST,API=sap,ENDPOINT=sponsors', function () {
-    uploadInvoices(5)
+export function setup() {
+  return {token:  authSap('manager')};
+}
+
+
+export default function (data) {
+
+  group('[Sponsors] upload 100 notas', function () {
+    uploadInvoices(100, data.token)
   });
+
+}
+
+export function teardown(data){
+  if(!data){
+    throw new Error(`token not generate ${JSON.stringify(data)}`);
+  } 
 }
