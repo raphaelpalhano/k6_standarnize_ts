@@ -6,31 +6,31 @@ import { setupEnv } from '../helper/env.control.js';
 const ENV = setupEnv(__ENV.VARIABLES_ENV); 
 
 export function authSap(entityType) {
-
-  let typeUser;
   const typesUsers = {
     supplier: {
       username: ENV.USER_BACK_SUPPLIER,
       password: ENV.PASSWORD_ENTITY,
-      client_id: ENV.COGNITO_CLIENT_SAP,
-      client_secret: 'onmsvsv7nq70g51lpnnsab4mj270ajmu7ere1qcks988ttq610k'
     },
     manager: {
       username: ENV.USER_BACK_MANAGER,
       password: ENV.PASSWORD_ENTITY,
-      client_id: ENV.COGNITO_CLIENT_SAP,
-      client_secret: 'onmsvsv7nq70g51lpnnsab4mj270ajmu7ere1qcks988ttq610k'
+      
     },
     investor: {
       username: ENV.USER_BACK_INVESTOR,
       password: ENV.PASSWORD_ENTITY,
-      client_id: ENV.COGNITO_CLIENT_SAP,
-      client_secret: 'onmsvsv7nq70g51lpnnsab4mj270ajmu7ere1qcks988ttq610k'
    
     },
+    integrator:{
+      username: ENV.USER_INTEGRATOR,
+      password: ENV.PASSOWRD_INTEGRATOR
+    },
+    client_id: ENV.COGNITO_CLIENT_SAP,
+    client_secret: 'onmsvsv7nq70g51lpnnsab4mj270ajmu7ere1qcks988ttq610k'
   };  
   
-  typeUser = typesUsers[entityType];
+  const typeUser = typesUsers[entityType];
+
   const params = {
     headers: 
     { 
@@ -39,9 +39,8 @@ export function authSap(entityType) {
     }, 
   };
 
-  const payload = `username=${typeUser.username}&password=${typeUser.password}&client_id=${typeUser.client_id}&client_secret=${typeUser.client_secret}`
+  const payload = `username=${typeUser.username}&password=${typeUser.password}&client_id=${typesUsers.client_id}&client_secret=${typesUsers.client_secret}`
   const response = http.post(`${ENV.SAP_URL}auth/token`, payload, params) 
-  // TOKEN = response.json().access_token;
 
   if(response.status !== 200){
     console.log(response)

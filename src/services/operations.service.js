@@ -24,6 +24,11 @@ export function authCognito(entityType) {
         password: ENV.PASSWORD_ENTITY,
     
         },
+        integrator:{
+            username: ENV.USER_INTEGRATOR,
+            password: ENV.PASSOWRD_INTEGRATOR
+        },
+
         client_id: ENV.COGNITO_CLIENT,
     };  
     
@@ -75,22 +80,20 @@ export function createOrder(TOKEN){
     }
 
     const params = {
-      headers: 
-      { 
-        'Accept': '*/*',
-        'content-type': 'application/json',
-        'Authorization': `Bearer ${TOKEN}`
-      }, 
+        headers: 
+        { 
+            'Accept': '*/*',
+            'content-type': 'application/json',
+            'Authorization': `Bearer ${TOKEN}`
+        }, 
     };
-  
     const response = http.post(`${ENV.API_URL}operations/api/v1/orders`, JSON.stringify(payload), params)
     if(response.status !== 202){
-      console.log(JSON.stringify(response, null, "  "));
-      console.log(response.status);
+        console.log(JSON.stringify(response, null, "  "));
+        console.log(response.status);
     }
     check(response, { 'status is 201': (r) => r.status === 201 });
-  
-  
+    
     sleep(2);
 
 }
@@ -116,8 +119,7 @@ export function submitOrder(TOKEN, id){
         console.log(response.status);
     }
     check(response, { 'status is 201': (r) => r.status === 201 });
-  
-  
+    
     sleep(0.3);
 
 }

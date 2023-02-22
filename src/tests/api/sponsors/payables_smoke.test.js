@@ -4,7 +4,7 @@ import { group } from 'k6';
 
 
 export function setup() {
-  return {token:  authSap('manager')};
+  return {token:  authSap('integrator')};
 }
 
 

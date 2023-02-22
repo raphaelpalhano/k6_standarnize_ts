@@ -27,7 +27,7 @@ export const options = {
 };
 
 export function setup() {
-   return {data:  {token_cognito: authCognito('supplier'), token_sap: authSap('manager')}};
+  return {data:  {token_cognito: authCognito('supplier'), token_sap: authSap('integrator')}};
 }
 
 export default function (data) {

@@ -20,7 +20,7 @@ export const options = {
 };
 
 export function setup() {
-  return {token:  authSap('manager')};
+  return {token:  authSap('integrator')};
 }
 
 
