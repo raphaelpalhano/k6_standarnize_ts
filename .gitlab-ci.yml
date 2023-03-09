@@ -21,7 +21,7 @@ stages:
     - test
 
 before_script:
-  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  - docker login gitlab.fcalatam.com:4567
 
 
 build-k6:
@@ -29,8 +29,8 @@ build-k6:
     rules:
       - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
     script: 
-      - docker build -t k6-tests:latest -f docker/dockerfile .
-      - docker push
+      - docker build -t gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test .
+      - docker push gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test
 
 k6-tests:
   stage: test
