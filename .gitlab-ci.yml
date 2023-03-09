@@ -1,11 +1,9 @@
 image: 253882794486.dkr.ecr.us-east-1.amazonaws.com/build-tools:864d3610-node-18
 
-# .regular_rules: &regular_rules
-#   rules:
-#     - if: $CI_MERGE_REQUEST_APPROVED
-#     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-#       when: never
-#     - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop" || "main" && $CI_COMMIT_REF_NAME == "feature" || "release"'
+include:
+  - project: 'fca/architecture/IaC/cloud-digital/common-ci'
+    file: 'job-commons.yml'
+
 
 
 
