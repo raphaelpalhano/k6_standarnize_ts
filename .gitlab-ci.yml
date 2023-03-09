@@ -5,12 +5,12 @@ include:
     file: 'job-commons.yml'
 
 
-.regular_rules: &regular_rules
-  rules:
-    - if: $CI_MERGE_REQUEST_APPROVED
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-      when: never
-    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop" || "main" && $CI_COMMIT_REF_NAME == "feature" || "release"'
+# .regular_rules: &regular_rules
+#   rules:
+#     - if: $CI_MERGE_REQUEST_APPROVED
+#     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+#       when: never
+#     - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop" || "main" && $CI_COMMIT_REF_NAME == "feature" || "release"'
 
 
 
@@ -34,7 +34,10 @@ build-k6:
 
 k6-tests:
   stage: test
-  <<: *regular_rules
+  only:
+    - master
+    - develop
+  when: manual
   script:
     - docker pull
     - docker run -t k6-tests:latest run --env VARIABLES_ENV=NONPROD dist/sponsors/payables/load.test.js
