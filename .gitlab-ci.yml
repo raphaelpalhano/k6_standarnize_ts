@@ -1,10 +1,5 @@
 image: 253882794486.dkr.ecr.us-east-1.amazonaws.com/build-tools:864d3610-node-18
 
-include:
-  - project: 'fca/architecture/IaC/cloud-digital/common-ci'
-    file: 'job-commons.yml'
-
-
 # .regular_rules: &regular_rules
 #   rules:
 #     - if: $CI_MERGE_REQUEST_APPROVED
@@ -14,11 +9,18 @@ include:
 
 
 
-
-
 stages:
-    - build
-    - test
+  - build
+  - test
+
+
+.rules:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: on_success
+      allow_failure: false
+    - when: manual
+
 
 before_script:
   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
@@ -26,18 +28,21 @@ before_script:
 
 build-k6:
     stage: build
-    rules:
-      - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    extends:
+      - .rules
     script: 
       - docker build -t gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test -f docker/dockerfile .
       - docker push gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test
 
-k6-tests:
+tests-k6:
   stage: test
-  only:
-    - master
-    - develop
-  when: manual
+  extends:
+    - .rules
+  needs:
+    - job: build-k6
+      artifacts: true
+  dependencies:
+    - build-k6
   script:
     - docker pull
     - docker run -t k6-tests:latest run --env VARIABLES_ENV=NONPROD dist/sponsors/payables/load.test.js
