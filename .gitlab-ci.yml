@@ -29,7 +29,7 @@ build-k6:
     rules:
       - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
     script: 
-      - docker build -t gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test .
+      - docker build -t gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test -f docker/dockerfile .
       - docker push gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test
 
 k6-tests:
