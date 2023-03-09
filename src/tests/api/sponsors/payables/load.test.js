@@ -1,4 +1,4 @@
-import { authSap, researchInvoices, uploadInvoices } from "../../../services/sap.service";
+import { authSap, researchInvoices, uploadInvoices } from "../../../../services/sap.service";
 import { group } from 'k6';
  
 

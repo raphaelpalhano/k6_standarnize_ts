@@ -43,7 +43,7 @@ services:
       - k6
     environment:
       - K6_OUT=influxdb=http://influxdb:8086/k6
-    command: run --env VARIABLES_ENV=NONPROD  dist/sponsors/smoke.test.js
+    command: run --env VARIABLES_ENV=NONPROD  dist/sponsors/payables/smoke.test.js
     ports:
       - "6565:6565"
 
@@ -54,7 +54,7 @@ services:
       - k6
     environment:
       - K6_OUT=influxdb=http://influxdb:8086/k6
-    command: run --env VARIABLES_ENV=NONPROD dist/sponsors/load.test.js
+    command: run --env VARIABLES_ENV=NONPROD dist/sponsors/payables/load.test.js
     ports:
       - "6566:6566"
   
@@ -65,7 +65,7 @@ services:
       - k6
     environment:
       - K6_OUT=influxdb=http://influxdb:8086/k6
-    command: run --env VARIABLES_ENV=NONPROD dist/sponsors/stress.test.js
+    command: run --env VARIABLES_ENV=NONPROD dist/sponsors/payables/stress.test.js
     ports:
       - "6567:6567"
     

@@ -57,7 +57,7 @@ export function authSap(entityType) {
   return response.json().access_token
 }
 
-export function uploadInvoices(numberInvoices, TOKEN){
+export function uploadInvoices(numberInvoices = 1, TOKEN){
 
   const payload = createInvoices(numberInvoices);
   const params = {
