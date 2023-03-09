@@ -29,8 +29,8 @@ build-k6:
     extends:
       - .rules
     script: 
-      - docker build -t gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test -f docker/dockerfile .
-      - docker push gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test
+      - docker build -t gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test:latest -f docker/dockerfile .
+      - docker push gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test:latest
 
 tests-k6:
   stage: test
@@ -42,5 +42,5 @@ tests-k6:
   dependencies:
     - build-k6
   script:
-    - docker pull gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test
-    - docker run -t k6-tests:latest run --env VARIABLES_ENV=NONPROD dist/sponsors/payables/load.test.js
+    - docker pull gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test:latest
+    - docker run -t gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test:latest run --env VARIABLES_ENV=NONPROD dist/sponsors/payables/load.test.js
