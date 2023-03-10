@@ -1,17 +1,18 @@
 import { authSap, uploadInvoices } from "../../../../services/sap.service";
 import { group } from 'k6';
+import { ENV_TEST } from "../../../../helper/env.test.control";
 
 
 export const options = {
   stages: [
-    { duration: '4s', target: 2 }, // below normal load
-    { duration: '10s', target: 4 },
-    { duration: '4s', target: 8 }, // normal load
-    { duration: '10s', target: 16 },
-    { duration: '4s', target: 20 }, // around the breaking point
-    { duration: '10s', target: 20 },
-    { duration: '4s', target: 40 }, // beyond the breaking point
-    { duration: '10s', target: 40 },
+    { duration: ENV_TEST.DURATION_START || '10s', target: ENV_TEST.VU_START || 2 }, // below normal load
+    { duration: ENV_TEST.DURATION_MIDDLE || '20s', target: ENV_TEST.VU_MIDDLE **2 || 4 },
+    { duration: ENV_TEST.DURATION_START || '10s', target: ENV_TEST.VU_MIDDLE ** 3 || 8 }, // below normal load
+    { duration: ENV_TEST.DURATION_MIDDLE || '20s', target: ENV_TEST.VU_MIDDLE ** 3 || 8 },
+    { duration: ENV_TEST.DURATION_START || '10s', target: ENV_TEST.VU_MIDDLE ** 4 || 16 },
+    { duration: ENV_TEST.DURATION_MIDDLE || '20s', target: ENV_TEST.VU_MIDDLE **4 || 16 },
+    { duration: ENV_TEST.DURATION_MIDDLE || '10s', target: ENV_TEST.VU_MIDDLE **5 || 32 },
+    { duration: ENV_TEST.DURATION_MIDDLE || '20s', target: ENV_TEST.VU_MIDDLE **5 || 32 },
     { duration: '10s', target: 0 }, // scale down. Recovery stage.
   ],
 };
@@ -24,7 +25,7 @@ export function setup() {
 export default function (data) {
 
   group('[Sponsors] upload 100 notas', function () {
-    uploadInvoices(100, data.token)
+    uploadInvoices( ENV_TEST.INVOICES || 100, data.token)
   });
 
 }

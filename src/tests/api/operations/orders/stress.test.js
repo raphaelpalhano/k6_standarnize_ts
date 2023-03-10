@@ -32,7 +32,7 @@ export function setup() {
 
 export default function (data) {
   group('[Operations] create and submit operation', function () {
-    uploadInvoices(20, data.data.token_sap)
+    uploadInvoices(ENV_TEST.INVOICES || 20, data.data.token_sap)
     createOrder(data.data.token_cognito);
     submitOrder(data.data.token_cognito, '1')
 

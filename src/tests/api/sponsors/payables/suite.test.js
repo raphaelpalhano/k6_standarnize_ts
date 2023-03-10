@@ -1,5 +1,6 @@
 import {  authSap, uploadInvoices } from "../../../../services/sap.service";
 import { group } from 'k6';
+import { ENV_TEST } from "../../../../helper/env.test.control";
 
 
 export const options = {
@@ -53,7 +54,7 @@ export function setup() {
 export default function (data) {
 
   group('[Sponsors] upload 100 notas', function () {
-    uploadInvoices(100, data.token)
+    uploadInvoices(ENV_TEST.INVOICES || 100, data.token)
   });
 
 }
