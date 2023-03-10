@@ -31,22 +31,23 @@ payables-load:
   stage: test
   when: manual
   script:
+    - echo 
     - docker pull gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test:latest
-    - docker run -t gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test:latest run --env VARIABLES_ENV=NONPROD --env VU_START=VU_START --env VU_MIDDLE=VU_MIDDLE --env VU_FINAL=VU_FINAL --env DURATION_START=DURATION_START --env DURATION_MIDDLE=DURATION_MIDDLE --env DURATION_FINAL=DURATION_FINAL --env THRESHOLD=THRESHOLD --env FAIL_REQUESTS=FAIL_REQUESTS --env INVOICES=INVOICES dist/sponsors/payables/load.test.js
+    - docker run -t gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test:latest run --env VARIABLES_ENV=NONPROD --env VU_START=$VU_START --env VU_MIDDLE=$VU_MIDDLE --env VU_FINAL=$VU_FINAL --env DURATION_START=$DURATION_START --env DURATION_MIDDLE=$DURATION_MIDDLE --env DURATION_FINAL=$DURATION_FINAL --env THRESHOLD=$THRESHOLD --env FAIL_REQUESTS=$FAIL_REQUESTS --env INVOICES=$INVOICES dist/sponsors/payables/load.test.js
 
 payables-stress:
   stage: test
   when: manual
   script:
     - docker pull gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test:latest
-    - docker run -t gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test:latest run --env VARIABLES_ENV=NONPROD --env VU_START=VU_START --env VU_MIDDLE=VU_MIDDLE --env VU_FINAL=VU_FINAL --env DURATION_START=DURATION_START --env DURATION_MIDDLE=DURATION_MIDDLE --env DURATION_FINAL=DURATION_FINAL --env THRESHOLD=THRESHOLD --env FAIL_REQUESTS=FAIL_REQUESTS --env INVOICES=INVOICES dist/sponsors/payables/stress.test.js
+    - docker run -t gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test:latest run --env VARIABLES_ENV=NONPROD --env VU_START=$VU_START --env VU_MIDDLE=$VU_MIDDLE --env VU_FINAL=$VU_FINAL --env DURATION_START=$DURATION_START --env DURATION_MIDDLE=$DURATION_MIDDLE --env DURATION_FINAL=$DURATION_FINAL --env THRESHOLD=$THRESHOLD --env FAIL_REQUESTS=$FAIL_REQUESTS --env INVOICES=$INVOICES dist/sponsors/payables/stress.test.js
 
 submit-orders-load:
   stage: test
   when: manual
   script:
     - docker pull gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test:latest
-    - docker run -t gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test:latest run --env VARIABLES_ENV=NONPROD --env VU_START=VU_START --env VU_MIDDLE=VU_MIDDLE --env VU_FINAL=VU_FINAL --env DURATION_START=DURATION_START --env DURATION_MIDDLE=DURATION_MIDDLE --env DURATION_FINAL=DURATION_FINAL --env THRESHOLD=THRESHOLD --env FAIL_REQUESTS=FAIL_REQUESTS --env INVOICES=INVOICES dist/operations/orders/load.test.js
+    - docker run -t gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test:latest run --env VARIABLES_ENV=NONPROD --env VU_START=$VU_START --env VU_MIDDLE=$VU_MIDDLE --env VU_FINAL=$VU_FINAL --env DURATION_START=$DURATION_START --env DURATION_MIDDLE=$DURATION_MIDDLE --env DURATION_FINAL=$DURATION_FINAL --env THRESHOLD=$THRESHOLD --env FAIL_REQUESTS=$FAIL_REQUESTS --env INVOICES=$INVOICES dist/operations/orders/load.test.js
 
 
 submit-orders-stress:
@@ -54,5 +55,5 @@ submit-orders-stress:
   when: manual
   script:
     - docker pull gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test:latest
-    - docker run -t gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test:latest run --env VARIABLES_ENV=NONPROD --env VU_START=VU_START --env VU_MIDDLE=VU_MIDDLE --env VU_FINAL=VU_FINAL --env DURATION_START=DURATION_START --env DURATION_MIDDLE=DURATION_MIDDLE --env DURATION_FINAL=DURATION_FINAL --env THRESHOLD=THRESHOLD --env FAIL_REQUESTS=FAIL_REQUESTS --env INVOICES=INVOICES dist/operations/orders/stress.test.js
+    - docker run -t gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test:latest run --env VARIABLES_ENV=NONPROD --env VU_START=$VU_START --env VU_MIDDLE=$VU_MIDDLE --env VU_FINAL=$VU_FINAL --env DURATION_START=$DURATION_START --env DURATION_MIDDLE=$DURATION_MIDDLE --env DURATION_FINAL=$DURATION_FINAL --env THRESHOLD=$THRESHOLD --env FAIL_REQUESTS=$FAIL_REQUESTS --env INVOICES=$INVOICES dist/operations/orders/stress.test.js
 
