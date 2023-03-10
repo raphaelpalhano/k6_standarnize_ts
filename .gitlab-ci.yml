@@ -5,8 +5,9 @@ include:
     file: 'job-commons.yml'
 
 stages:
-  - build
-  - test
+   - test
+   - build
+ 
 
 .rules:
   rules:
