@@ -30,9 +30,6 @@ build-k6:
 tests-k6:
   stage: test
   when: manual
-  only: 
-    - develop
-    - master
   script:
     - docker pull gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test:latest
     - docker run -t gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test:latest run --env VARIABLES_ENV=NONPROD dist/sponsors/payables/load.test.js
