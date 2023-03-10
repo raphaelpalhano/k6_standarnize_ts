@@ -5,7 +5,7 @@ import { ENV_TEST } from "../../../../helper/env.test.control";
 
 export const options = {
   thresholds: {
-    http_req_failed: [`${ENV_TEST.FAIL_REQUESTS}`] || ['rate<0.02'], // http errors should be less than 5%
+    http_req_failed: ENV_TEST.FAIL_REQUESTS || ['rate<0.02'], // http errors should be less than 5%
     http_req_duration: ENV_TEST.THRESHOLD || ['p(95)<300'], // 95% of requests should be below 200ms
   },
   stages: [

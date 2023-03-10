@@ -6,23 +6,19 @@ import { authCognito, createOrder, submitOrder } from '../../../../services/oper
 
 export const options = {
   thresholds: {
-    http_req_failed: ['rate<0.02'], // http errors should be less than 5%
-    http_req_duration: ['p(95)<300'], // 95% of requests should be below 200ms
+    http_req_failed: ENV_TEST.FAIL_REQUESTS || ['rate<0.02'], // http errors should be less than 5%
+    http_req_duration: ENV_TEST.THRESHOLD || ['p(95)<300'], // 95% of requests should be below 200ms
   },
   stages: [
-    { duration: '4s', target: 2 },
-    { duration: '10', target: 2 },
-    { duration: '4s', target: 4 },
-    { duration: '10s', target: 4 },
-    { duration: '4s', target: 8 },
-    { duration: '10s', target: 8 },
-    { duration: '4s', target: 16 },
-    { duration: '10s', target: 16 },
-    { duration: '5s', target: 0 },
-
-
-
-
+    { duration: ENV_TEST.DURATION_START || '10s', target: ENV_TEST.VU_START || 2 }, // below normal load
+    { duration: ENV_TEST.DURATION_MIDDLE || '20s', target: ENV_TEST.VU_MIDDLE **2 || 4 },
+    { duration: ENV_TEST.DURATION_START || '10s', target: ENV_TEST.VU_MIDDLE ** 3 || 8 }, // below normal load
+    { duration: ENV_TEST.DURATION_MIDDLE || '20s', target: ENV_TEST.VU_MIDDLE ** 3 || 8 },
+    { duration: ENV_TEST.DURATION_START || '10s', target: ENV_TEST.VU_MIDDLE ** 4 || 16 },
+    { duration: ENV_TEST.DURATION_MIDDLE || '20s', target: ENV_TEST.VU_MIDDLE **4 || 16 },
+    { duration: ENV_TEST.DURATION_MIDDLE || '10s', target: ENV_TEST.VU_MIDDLE **5 || 32 },
+    { duration: ENV_TEST.DURATION_MIDDLE || '20s', target: ENV_TEST.VU_MIDDLE **5 || 32 },
+    { duration: '10s', target: 0 }, // scale down. Recovery stage.
   ],
 };
 
