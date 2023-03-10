@@ -43,7 +43,6 @@ export function authSap(entityType) {
   const response = http.post(`${ENV.SAP_URL}auth/token`, payload, params) 
 
   if(response.status !== 200){
-    console.log(response)
     console.log(response.status);
   }
 
@@ -71,7 +70,6 @@ export function uploadInvoices(numberInvoices = 1, TOKEN){
 
   const response = http.post(`${ENV.SAP_URL}sponsors/1/payables`, payload, params)
   if(response.status !== 202){
-    console.log(JSON.stringify(response, null, "  "));
     console.log(`fail: status ${response.status}`)
   }
 
@@ -95,7 +93,6 @@ export function researchInvoices(filter, TOKEN){
   const response = http.get(`${ENV.SAP_URL}sponsors/1/payables?search${filter.search}&size=${filter.size}&sort=${filter.sort}`, params);
 
   if(response.status !== 200){
-    console.log(JSON.stringify(response, null, "  "));
     console.log(`fail: stauts ${response.status}`)
   }
 

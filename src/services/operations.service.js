@@ -58,8 +58,7 @@ export function authCognito(entityType) {
     const response = http.post(`${ENV.COGNITO_URL}`,  JSON.stringify(payload), params) 
 
     if(response.status !== 200){
-        console.log(JSON.stringify(response, null, "  "));
-        console.log(response.status);
+        console.log(`fail: status ${response.status}`)
     }
 
     check(response, { 'status is 200': (r) => r.status === 200 });
@@ -89,8 +88,7 @@ export function createOrder(TOKEN){
     };
     const response = http.post(`${ENV.API_URL}operations/api/v1/orders`, JSON.stringify(payload), params)
     if(response.status !== 202){
-        console.log(JSON.stringify(response, null, "  "));
-        console.log(response.status);
+        console.log(`fail: status ${response.status}`)
     }
     check(response, { 'status is 201': (r) => r.status === 201 });
     
@@ -115,8 +113,7 @@ export function submitOrder(TOKEN, id){
   
     const response = http.post(`${ENV.API_URL}operations/api/v1/orders/${id}/submit`, JSON.stringify(payload), params)
     if(response.status !== 202){
-        console.log(JSON.stringify(response, null, "  "));
-        console.log(response.status);
+        console.log(`fail: status ${response.status}`)
     }
     check(response, { 'status is 201': (r) => r.status === 201 });
     
