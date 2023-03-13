@@ -1,13 +1,14 @@
 import { authSap, uploadInvoices } from "../../../../services/sap.service";
 import { group } from 'k6';
 import { authCognito, createOrder, submitOrder } from '../../../../services/operations.service';
+import { ENV_TEST } from "../../../../helper/env.test.control";
 
 
 
 export const options = {
   thresholds: {
-    http_req_failed: ENV_TEST.FAIL_REQUESTS || ['rate<0.02'], // http errors should be less than 5%
-    http_req_duration: ENV_TEST.THRESHOLD || ['p(95)<300'], // 95% of requests should be below 200ms
+    http_req_failed: [ENV_TEST.FAIL_REQUESTS] || ['rate<0.02'], // http errors should be less than 5%
+    http_req_duration: [ENV_TEST.THRESHOLD] || ['p(95)<300'], // 95% of requests should be below 200ms
   },
   stages: [
     { duration: ENV_TEST.DURATION_START || '10s', target: ENV_TEST.VU_START || 2 }, // below normal load
