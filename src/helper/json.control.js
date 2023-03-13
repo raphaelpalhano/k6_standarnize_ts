@@ -11,11 +11,11 @@ export function createInvoices(numberInvoices){
     const iterationCompleted = (numberInvoices * exec.instance.iterationsCompleted);
     if(numberInvoices > 100 || numberInvoices <= 0) throw new Error("Numero de invoices incorreto!");
     for(let step = 0; step < numberInvoices; step++){
-        let installmentValue = getRandomArbitrary(1, 10000);
+        let installmentValue = getRandomArbitrary(1, 10000000);
         let iterationCount = iterationCompleted + step;
         let object =  {
             assetType: 'DIREITOS_CREDITORIOS',
-            externalId: getRandomInt(10000000).toString(),
+            externalId: getRandomArbitrary(10000, 100000000000).toString(),
             installment: installmentValue,
             invoiceDate: `${dateDecresed}`,
             invoiceKey: `NOTA${iterationCount}`,
