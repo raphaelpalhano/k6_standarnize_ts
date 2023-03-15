@@ -1,0 +1,71 @@
+version: '3.4'
+
+networks:
+  k6:
+  grafana:
+
+services:
+  influxdb:
+    image: influxdb:1.8
+#    entrypoint: /bin/sh
+#    user: root
+    networks:
+      - k6
+      - grafana
+    ports:
+      - "8086:8086"
+    environment:
+      - INFLUXDB_DB=k6
+
+  grafana:
+    image: grafana/grafana:latest
+#    entrypoint: /bin/sh
+#    user: root
+    networks:
+      - grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_BASIC_ENABLED=false
+      - GF_SERVER_SERVE_FROM_SUB_PATH=true
+    volumes:
+      - ./src/dashboards:/var/lib/grafana/dashboards
+      - ./src/grafana-dashboard.yaml:/etc/grafana/provisioning/dashboards/dashboard.yaml
+      - ./src/grafana-datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml
+
+  
+  sponsors_smoke:
+    image: k6-tests:latest
+    container_name: sponsors_smoke
+    networks:
+      - k6
+    environment:
+      - K6_OUT=influxdb=http://influxdb:8086/k6
+    command: run --env VARIABLES_ENV=NONPROD  dist/sponsors/payables/smoke.test.js
+    ports:
+      - "6565:6565"
+
+  sponsors_load:
+    image: k6-tests:latest
+    container_name: sponsors_load
+    networks:
+      - k6
+    environment:
+      - K6_OUT=influxdb=http://influxdb:8086/k6
+    command: run --env VARIABLES_ENV=NONPROD dist/sponsors/payables/load.test.js
+    ports:
+      - "6566:6566"
+  
+  sponsors_stress:
+    image: k6-tests:latest
+    container_name: sponsors_stress
+    networks:
+      - k6
+    environment:
+      - K6_OUT=influxdb=http://influxdb:8086/k6
+    command: run --env VARIABLES_ENV=NONPROD dist/sponsors/payables/stress.test.js
+    ports:
+      - "6567:6567"
+    
