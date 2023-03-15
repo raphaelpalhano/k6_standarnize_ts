@@ -8,7 +8,7 @@
     "test": "tests"
   },
   "scripts": {
-    "load": "k6 run --env VARIABLES_ENV=NONPROD --env DURATION_START=10s dist/sponsors/payables/load.test.js",
+    "load": "k6 run --env VARIABLES_ENV=NONPROD --env FAIL_REQUESTS='rate<0.02' --env THRESHOLD='p(95)<900' dist/sponsors/payables/load.test.js",
     "build": "webpack"
   },
   "repository": {

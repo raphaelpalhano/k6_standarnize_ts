@@ -57,26 +57,31 @@ export function authSap(entityType) {
 }
 
 export function uploadInvoices(numberInvoices = 1, TOKEN){
+  try{
+    const payload = createInvoices(numberInvoices);
+    const params = {
+      headers: 
+      { 
+        'Accept': '*/*',
+        'content-type': 'application/json',
+        'Authorization': `Bearer ${TOKEN}`
+      }, 
+    };
 
-  const payload = createInvoices(numberInvoices);
-  const params = {
-    headers: 
-    { 
-      'Accept': '*/*',
-      'content-type': 'application/json',
-      'Authorization': `Bearer ${TOKEN}`
-    }, 
-  };
+    const response = http.post(`${ENV.SAP_URL}sponsors/1/payables`, payload, params)
+    if(response.status !== 202){
+      console.log(`fail: status ${response.status}`)
+    }
 
-  const response = http.post(`${ENV.SAP_URL}sponsors/1/payables`, payload, params)
-  if(response.status !== 202){
-    console.log(`fail: status ${response.status}`)
+    check(response, { 'status is 202': (r) => r.status === 202 });
+
+
+    sleep(0.3);
+
+  }catch(error){
+    console.log(error.message);
   }
-
-  check(response, { 'status is 202': (r) => r.status === 202 });
-
-
-  sleep(0.3);
+ 
 
 }
 
