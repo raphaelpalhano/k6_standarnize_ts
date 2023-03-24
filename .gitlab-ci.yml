@@ -1,5 +1,3 @@
-image: 253882794486.dkr.ecr.us-east-1.amazonaws.com/build-tools:864d3610-node-18
-
 include:
   - project: 'fca/architecture/IaC/cloud-digital/common-ci'
     file: 'job-commons.yml'
@@ -7,7 +5,18 @@ include:
 stages:
    - test
    - build
- 
+  
+# variables:
+#     VARIABLES_ENV: $VARIABLES_ENV
+#     VU_START: $VU_START
+#     VU_MIDDLE: $VU_MIDDLE
+#     VU_FINAL: $VU_FINAL
+#     DURATION_START: $DURATION_START
+#     DURATION_MIDDLE: $DURATION_MIDDLE
+#     DURATION_FINAL: $DURATION_FINAL
+#     THRESHOLD: $THRESHOLD
+#     FAIL_REQUESTS: $FAIL_REQUESTS
+#     INVOICES: $INVOICES
 
 .rules:
   rules:
@@ -16,44 +25,45 @@ stages:
       allow_failure: false
     - when: manual
 
-before_script:
-  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+.k6_job:
+  stage: test
+  image: 
+    name: gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test:latest
+    entrypoint: ["/bin/sh"]
+  when: manual
+  script:
+  - k6 run --env VARIABLES_ENV=$VARIABLES_ENV --env VU_START=$VU_START --env VU_MIDDLE=$VU_MIDDLE --env VU_FINAL=$VU_FINAL --env DURATION_START=$DURATION_START --env DURATION_MIDDLE=$DURATION_MIDDLE --env DURATION_FINAL=$DURATION_FINAL --env THRESHOLD=$THRESHOLD --env FAIL_REQUESTS=$FAIL_REQUESTS --env INVOICES=$INVOICES $TEST_FILE
 
 build-k6:
     stage: build
+    image: 253882794486.dkr.ecr.us-east-1.amazonaws.com/build-tools:864d3610-node-18
     extends:
       - .rules
     script: 
+      - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
       - docker build -t gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test:latest -f docker/dockerfile .
       - docker push gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test:latest
 
 payables-load:
-  stage: test
-  when: manual
-  script:
-    - echo 
-    - docker pull gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test:latest
-    - docker run -t gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test:latest run --env VARIABLES_ENV=NONPROD --env VU_START=$VU_START --env VU_MIDDLE=$VU_MIDDLE --env VU_FINAL=$VU_FINAL --env DURATION_START=$DURATION_START --env DURATION_MIDDLE=$DURATION_MIDDLE --env DURATION_FINAL=$DURATION_FINAL --env THRESHOLD=$THRESHOLD --env FAIL_REQUESTS=$FAIL_REQUESTS --env INVOICES=$INVOICES dist/sponsors/payables/load.test.js
+  extends:
+    - .k6_job
+  variables:
+    TEST_FILE: /usr/src/app/dist/sponsors/payables/load.test.js
 
 payables-stress:
-  stage: test
-  when: manual
-  script:
-    - docker pull gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test:latest
-    - docker run -t gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test:latest run --env VARIABLES_ENV=NONPROD --env VU_START=$VU_START --env VU_MIDDLE=$VU_MIDDLE --env VU_FINAL=$VU_FINAL --env DURATION_START=$DURATION_START --env DURATION_MIDDLE=$DURATION_MIDDLE --env DURATION_FINAL=$DURATION_FINAL --env THRESHOLD=$THRESHOLD --env FAIL_REQUESTS=$FAIL_REQUESTS --env INVOICES=$INVOICES dist/sponsors/payables/stress.test.js
+  extends:
+    - .k6_job
+  variables:
+    TEST_FILE: /usr/src/app/dist/sponsors/payables/stress.test.js
 
 submit-orders-load:
-  stage: test
-  when: manual
-  script:
-    - docker pull gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test:latest
-    - docker run -t gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test:latest run --env VARIABLES_ENV=NONPROD --env VU_START=$VU_START --env VU_MIDDLE=$VU_MIDDLE --env VU_FINAL=$VU_FINAL --env DURATION_START=$DURATION_START --env DURATION_MIDDLE=$DURATION_MIDDLE --env DURATION_FINAL=$DURATION_FINAL --env THRESHOLD=$THRESHOLD --env FAIL_REQUESTS=$FAIL_REQUESTS --env INVOICES=$INVOICES dist/operations/orders/load.test.js
-
+  extends:
+    - .k6_job
+  variables:
+    TEST_FILE: /usr/src/app/dist/operations/orders/load.test.js
 
 submit-orders-stress:
-  stage: test
-  when: manual
-  script:
-    - docker pull gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test:latest
-    - docker run -t gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test:latest run --env VARIABLES_ENV=NONPROD --env VU_START=$VU_START --env VU_MIDDLE=$VU_MIDDLE --env VU_FINAL=$VU_FINAL --env DURATION_START=$DURATION_START --env DURATION_MIDDLE=$DURATION_MIDDLE --env DURATION_FINAL=$DURATION_FINAL --env THRESHOLD=$THRESHOLD --env FAIL_REQUESTS=$FAIL_REQUESTS --env INVOICES=$INVOICES dist/operations/orders/stress.test.js
-
+  extends:
+    - .k6_job
+  variables:
+    TEST_FILE: /usr/src/app/dist/operations/orders/stress.test.js
