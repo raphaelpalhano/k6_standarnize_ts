@@ -4,7 +4,7 @@ import { setupEnv } from './env.control.js';
 
 
 let TOKEN;
-const ENV = setupEnv(__ENV.VARIABLES_ENV); 
+const ENV = setupEnv(__ENV.VARIABLES_ENV || "NONPROD"); 
 
 
 export function authCognito(entityType){
