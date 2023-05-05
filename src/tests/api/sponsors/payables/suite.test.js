@@ -1,6 +1,6 @@
 import {  authSap, uploadInvoices } from "../../../../services/sap.service";
 import { group } from 'k6';
-import { ENV_TEST } from "../../../../helper/env.test.control";
+import { ENV_TEST } from "../../../../envs/env.test.control";
 
 
 export const options = {

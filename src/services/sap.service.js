@@ -1,9 +1,9 @@
 import http from 'k6/http';
 import { check, sleep } from 'k6';
 import { createInvoices } from '../helper/json.control.js';
-import { setupEnv } from '../helper/env.control.js';
+import { setupEnv } from '../envs/env.control';
 
-const ENV = setupEnv(__ENV.VARIABLES_ENV); 
+const ENV = setupEnv(__ENV.VARIABLES_ENV || "NONPROD");
 
 export function authSap(entityType) {
   const typesUsers = {
@@ -26,7 +26,8 @@ export function authSap(entityType) {
       password: ENV.PASSOWRD_INTEGRATOR
     },
     client_id: ENV.COGNITO_CLIENT_SAP,
-    client_secret: 'onmsvsv7nq70g51lpnnsab4mj270ajmu7ere1qcks988ttq610k'
+    client_secret: ENV.CLIENT_SECRET_SAP
+
   };  
   
   const typeUser = typesUsers[entityType];
@@ -43,6 +44,7 @@ export function authSap(entityType) {
   const response = http.post(`${ENV.SAP_URL}auth/token`, payload, params) 
 
   if(response.status !== 200){
+    console.log(response);
     console.log(response.status);
   }
 
@@ -70,6 +72,7 @@ export function uploadInvoices(numberInvoices = 1, TOKEN){
 
     const response = http.post(`${ENV.SAP_URL}sponsors/1/payables`, payload, params)
     if(response.status !== 202){
+      console.log(response);
       console.log(`fail: status ${response.status}`)
     }
 

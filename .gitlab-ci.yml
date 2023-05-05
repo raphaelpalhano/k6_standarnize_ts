@@ -1,22 +1,10 @@
 include:
-  - project: 'fca/architecture/IaC/cloud-digital/common-ci'
+  - project: 'common/project'
     file: 'job-commons.yml'
 
 stages:
    - test
    - build
-  
-# variables:
-#     VARIABLES_ENV: $VARIABLES_ENV
-#     VU_START: $VU_START
-#     VU_MIDDLE: $VU_MIDDLE
-#     VU_FINAL: $VU_FINAL
-#     DURATION_START: $DURATION_START
-#     DURATION_MIDDLE: $DURATION_MIDDLE
-#     DURATION_FINAL: $DURATION_FINAL
-#     THRESHOLD: $THRESHOLD
-#     FAIL_REQUESTS: $FAIL_REQUESTS
-#     INVOICES: $INVOICES
 
 .rules:
   rules:
@@ -28,7 +16,7 @@ stages:
 .k6_job:
   stage: test
   image: 
-    name: gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test:latest
+    name: nomeDaImageNoDockerRegistryDentroDoGitlab:latest
     entrypoint: ["/bin/sh"]
   when: manual
   script:
@@ -36,13 +24,13 @@ stages:
 
 build-k6:
     stage: build
-    image: 253882794486.dkr.ecr.us-east-1.amazonaws.com/build-tools:864d3610-node-18
+    image: node:19-slim
     extends:
       - .rules
     script: 
       - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-      - docker build -t gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test:latest -f docker/dockerfile .
-      - docker push gitlab.fcalatam.com:4567/fca/banco-fidis/ms8/performance-test:latest
+      - docker build -t nomeDaImageNoDockerRegistryDentroDoGitlab:latest -f docker/dockerfile .
+      - docker push nomeDaImageNoDockerRegistryDentroDoGitlab:latest
 
 payables-load:
   extends:

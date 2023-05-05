@@ -1,9 +1,10 @@
 import http from 'k6/http';
 import { check, sleep } from 'k6';
-import { setupEnv } from '../helper/env.control.js';
+import { setupEnv } from '../envs/env.control';
 
 
-const ENV = setupEnv(__ENV.VARIABLES_ENV);
+const ENV = setupEnv(__ENV.VARIABLES_ENV || "NONPROD");
+
 
 
 export function authCognito(entityType) {
@@ -58,6 +59,7 @@ export function authCognito(entityType) {
     const response = http.post(`${ENV.COGNITO_URL}`,  JSON.stringify(payload), params) 
 
     if(response.status !== 200){
+        console.log(response);
         console.log(`fail: status ${response.status}`)
     }
 

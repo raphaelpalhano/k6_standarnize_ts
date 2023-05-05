@@ -8,7 +8,8 @@
     "test": "tests"
   },
   "scripts": {
-    "load": "k6 run --env VARIABLES_ENV=NONPROD --env FAIL_REQUESTS='rate<0.02' --env THRESHOLD='p(95)<900' dist/sponsors/payables/load.test.js",
+    "load": "k6 run --env VARIABLES_ENV=NONPROD --env VU_MIDDLE=10 --env DURATION_MIDDLE='5m' --env INVOICES=100 dist/sponsors/payables/load.test.js",
+    "stress": "k6 run --env VARIABLES_ENV=NONPROD --env INVOICES=100 --env FAIL_REQUESTS='rate<0.10' --env THRESHOLD='p(95)<1000' dist/sponsors/payables/stress.test.js",
     "build": "webpack"
   },
   "repository": {
