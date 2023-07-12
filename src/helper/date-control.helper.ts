@@ -1,5 +1,5 @@
 
-export const dataIncrement = (day) => {
+export const dataIncrement = (day: number) => {
     let today = new Date();
     today.setDate(today.getDate() + day);
     let dd = String(today.getDate()).padStart(2, '0');
@@ -11,7 +11,7 @@ export const dataIncrement = (day) => {
     return formatToday;
 };
 
-export const dataDecrease = (day) => {
+export const dataDecrease = (day: number) => {
     let today = new Date();
     today.setDate(today.getDate() - day);
     let dd = String(today.getDate()).padStart(2, '0');

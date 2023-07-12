@@ -79,3 +79,12 @@ docker build -t k6-tests:latest -f docker/dockerfile .
 ### test
 
 docker run -t k6-tests:latest run --env VARIABLES_ENV=NONPROD dist/sponsors/load.test.js
+
+
+## api
+
+https://swapi.dev/
+
+## Other template
+
+https://github.com/grafana/k6-template-typescript/blob/main/package.json

@@ -1,8 +1,9 @@
+import { Options } from "k6/options";
 import { ENV_TEST } from "../envs/env.test.control";
 
 
-export function optionsLoad(durationStart, DurationMiddle, DurationFinal, vuStart, 
-  VuMiddle, req_fail = 'rate<0.05', req_duration = 'p(95)<800'){
+export function optionsLoad(durationStart: string, durationMiddle: string, durationFinal: string, vuStart: number, 
+  vuMiddle: number, req_fail = 'rate<0.05', req_duration = 'p(95)<800'): Options {
     const options = {
         thresholds: {
             http_req_failed: [ENV_TEST.FAIL_REQUESTS || req_fail], // http errors should be less than 5%
@@ -13,10 +14,10 @@ export function optionsLoad(durationStart, DurationMiddle, DurationFinal, vuStar
             { duration: ENV_TEST.DURATION_START || durationStart, target: ENV_TEST.VU_START || vuStart },
         
             // Stay at rest on 5 VUs for 10s
-            { duration: ENV_TEST.DURATION_MIDDLE || DurationMiddle, target:  ENV_TEST.VU_MIDDLE || VuMiddle },
+            { duration: ENV_TEST.DURATION_MIDDLE || durationMiddle, target:  ENV_TEST.VU_MIDDLE || vuMiddle },
         
             // Ramp-down from 5 to 0 VUs for 5s
-            { duration: ENV_TEST.DURATION_FINAL || DurationFinal, target: ENV_TEST.VU_FINAL || 0 },
+            { duration: ENV_TEST.DURATION_FINAL || durationFinal, target: ENV_TEST.VU_FINAL || 0 },
           ],
     }
 

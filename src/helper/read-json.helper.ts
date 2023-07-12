@@ -2,9 +2,9 @@ import { sleep } from 'k6';
 import { SharedArray } from 'k6/data';
 
 
-export default function (path, isList = false) {
-  let datas;
-  let data;
+export default function (path: string, isList = false) {
+  let datas: [] | object[];
+  let data: object;
 
   if(isList){
     datas = new SharedArray('data', () => {
