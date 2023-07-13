@@ -78,7 +78,7 @@ docker build -t k6-tests:latest -f docker/dockerfile .
 
 ### test
 
-docker run -t k6-tests:latest run --env VARIABLES_ENV=NONPROD dist/sponsors/load.test.js
+docker run -t k6-tests:latest run --env ENVIRONMENT=NONPROD dist\load-people.test.js
 
 
 ## api
