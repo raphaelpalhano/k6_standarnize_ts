@@ -3,7 +3,7 @@ import { optionsLoad } from '../../../options/options.load';
 import getSwapi from '../../../services/swap.service';
 
 
-export const options = optionsLoad('10s', '1m', '5s', 5, 10);
+export const options = optionsLoad('10s', '1m', '5s', 50, 100);
 
 //setup (generate token)
 export function setup() {
