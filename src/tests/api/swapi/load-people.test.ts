@@ -2,7 +2,7 @@ import { group } from 'k6';
 import { optionsLoad } from '../../../options/options.load';
 import getSwapi from '../../../services/swap.service';
 
-
+//options
 export const options = optionsLoad('10s', '1m', '5s', 50, 100);
 
 //setup (generate token)
@@ -19,7 +19,7 @@ export default function () {
 }
 
 
-//valid token and finish test
+//terdown token and finish test
 export function teardown(data: any): void{
   if(!data){
     throw new Error(`token not generate ${JSON.stringify(data.token)}`);
